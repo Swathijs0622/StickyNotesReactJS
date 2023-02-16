@@ -16,6 +16,7 @@
             padding: 15px;
             border: 1px solid orange;
             box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.2);
+            position: absolute;
         }
     </style>
 </head>
@@ -33,6 +34,17 @@
                 }
             }
 
+            componentWillMount = () => {
+                this.style = {
+                    right: this.randomBetween(0, window.innerWidth - 150, 'px'),
+                    top: this.randomBetween(0, window.innerHeight - 150, 'px')
+                }
+            }
+
+            randomBetween = (x, y, s) => {
+                return ( x + Math.ceil(Math.random() * (y - x)) + s )
+            }
+
             edit = () => {
                 this.setState({editing: true})
             }
@@ -48,7 +60,7 @@
 
             renderForm = () => {
                 return(
-                    <div class="note">
+                    <div class="note" style={this.style}>
                         <textarea ref="newText"></textarea>
                         <button onClick={this.save}>Save</button>
                     </div>
@@ -58,7 +70,7 @@
             // By default, display the form     
             renderDisplay = () => {
                 return(
-                    <div className="note">
+                    <div className="note" style={this.style}>
                         <p>{this.props.children}</p>
                         <span>
                             <button onClick={this.edit}>Edit</button>
